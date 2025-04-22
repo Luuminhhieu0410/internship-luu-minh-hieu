@@ -2,7 +2,8 @@
   "dependencies": {
     "archiver": "^7.0.1",
     "busboy": "^1.6.0",
-    "chalk": "^4.1.2"
+    "chalk": "^4.1.2",
+    "express": "^5.1.0"
   },
   "scripts": {
     "hello": "node ./3_phan15_27_npm_npx/index.js"

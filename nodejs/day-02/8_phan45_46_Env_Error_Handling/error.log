@@ -1,0 +1,44 @@
+2025-04-22T16:47:01.741Z - Error: lỗi gì đó rồi
+    at c:\Users\LOQ\Desktop\internship\nodejs\day-02\8_phan45_46_Env_Error_Handling\express.js:42:17
+    at Layer.handleRequest (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\layer.js:152:17)
+    at next (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\route.js:117:3)
+    at handle (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\layer.js:152:17)
+    at c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:295:15
+    at processParams (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:582:12)
+    at next (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:291:5)
+    at jsonParser (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\body-parser\lib\types\json.js:109:7)
+2025-04-22T16:48:24.951Z - Error: Not Found
+    at notFoundHandler (c:\Users\LOQ\Desktop\internship\nodejs\day-02\8_phan45_46_Env_Error_Handling\express.js:32:17)
+    at Layer.handleRequest (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:342:13)
+    at c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:297:9
+    at processParams (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:582:12)
+    at next (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:291:5)
+    at jsonParser (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\body-parser\lib\types\json.js:100:7)
+    at Layer.handleRequest (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:342:13)
+    at c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:297:9
+2025-04-22T16:49:31.325Z - Error: lỗi gì đó rồi
+    at c:\Users\LOQ\Desktop\internship\nodejs\day-02\8_phan45_46_Env_Error_Handling\express.js:42:17
+    at Layer.handleRequest (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\layer.js:152:17)
+    at next (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\route.js:117:3)
+    at handle (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\layer.js:152:17)
+    at c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:295:15
+    at processParams (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:582:12)
+    at next (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:291:5)
+    at jsonParser (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\body-parser\lib\types\json.js:100:7)
+2025-04-22T16:55:03.180Z - Error: Not Found
+    at notFoundHandler (c:\Users\LOQ\Desktop\internship\nodejs\day-02\8_phan45_46_Env_Error_Handling\express.js:32:17)
+    at Layer.handleRequest (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:342:13)
+    at c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:297:9
+    at processParams (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:582:12)
+    at next (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\router\index.js:291:5)
+    at c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\body-parser\lib\read.js:132:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:211:14)
+    at invokeCallback (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\raw-body\index.js:238:16)
+    at done (c:\Users\LOQ\Desktop\internship\nodejs\day-02\node_modules\raw-body\index.js:227:7)

@@ -4,7 +4,7 @@ const fs = require('fs');
 class MyEmitter extends EventEmitter {
     logEvent(eventName) {
         const logMessage = `[${new Date().toISOString()}] Event: ${eventName}\n`;
-        fs.appendFileSync('events.log', logMessage);
+        fs.appendFileSync(`${__dirname}/events.log`, logMessage);
         console.log(logMessage);
     }
 }

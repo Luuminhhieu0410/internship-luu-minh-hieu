@@ -535,9 +535,464 @@ const server = http.createServer((req, res) => {
 
 server.listen(3000, () => console.log('Server is running port 3000'));
 ```
+### 🎯 Bài tập nâng cao:
+* #### Viết HTTP server không dùng Express:
+* #### Route POST /upload nhận file bằng multipart/form-data (gợi ý dùng busboy)
+* #### Khi upload xong, emit sự kiện upload:done, ghi log lại vào file uploads.log.
+```javascript
+// server_post.js
+const http = require('http');
+const fs = require('fs');
+const EventEmitter = require('events');
+const busboy = require('busboy');
+
+class UploadEmitter extends EventEmitter {}
+const uploadEmitter = new UploadEmitter();
+
+// Hàm ghi log vào uploads.log
+function logUpload(filename) {
+    const logMessage = `[${new Date().toISOString()}] Uploaded file: ${filename}\n`;
+    fs.appendFileSync(`${__dirname}/uploads.log`, logMessage);
+    console.log(logMessage);
+}
+
+// Xử lý sự kiện upload:done
+uploadEmitter.on('upload:done', (filename) => {
+    logUpload(filename);
+});
+
+const server = http.createServer((req, res) => {
+    if (req.url === '/upload' && req.method === 'POST') {
+        const bb = busboy({ headers: req.headers });
+        let fileName = '';
+
+        // Xử lý khi nhận được file
+        bb.on('file', (fieldname, file, filename) => {
+          // console.log('file ' + JSON.stringify(file));
+          // console.log('filename ' + JSON.stringify(filename));
+          
+            const saveTo = `${__dirname}/uploads/${filename.filename}`;
+            file.pipe(fs.createWriteStream(saveTo));
+        });
+
+        // Khi hoàn tất upload
+        bb.on('finish', () => {
+            uploadEmitter.emit('upload:done', fileName);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'File uploaded successfully', filename: fileName }));
+        });
+
+        // Pipe request vào busboy
+        req.pipe(bb);
+    } else {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Not Found');
+    }
+});
+
+// Tạo thư mục uploads nếu chưa tồn tại
+if (!fs.existsSync(`${__dirname}/uploads`)) {
+    fs.mkdirSync(`${__dirname}/uploads`);
+}
+
+server.listen(3000, () => console.log('Server running on port 3000'));
+```
+#### Test bằng Postman
+![alt text](./screenshots/11.png)
+
+# PHẦN 44: Streams
+### Câu hỏi:
+### 1. Ưu điểm của stream?
+#### Stream là gì
+* Stream có thể hiểu là 1 chuỗi những mảnh dữ liệu được lắp ghép lại với nhau để tạo ra dòng chảy dữ liệu và chúng được tách ra vận chuyển với một đoạn dữ liệu gọi là chunk. Chunk là 1 đoạn dữ liệu được truyền qua 1 stream, diữ liệu được cắt ra thành những mảng chunks và chuyển đi. Ví dụ, ta có 1 file có kích thước 128MB sẽ được tách ra thành 4 mảnh 32MB và chuyển đi 
+* Đây chính là cách mà NodeJS dùng để xử lý lượng lớn dữ liệu. Giả sử bạn có 1 lượng dữ liệu vô cùng lớn phải xử lý, nhưng bạn sẽ không cần thiết phải đợi tất cả các dữ liệu được đọc mà có thể xử lý từng phần riêng biệt
+#### Ưu điểm của stream 
+* Tiết kiệm bộ nhớ: Stream xử lý dữ liệu theo từng phần (chunks) thay vì đọc toàn bộ file vào bộ nhớ, rất hiệu quả với file lớn.
+* Hiệu suất cao: Dữ liệu được xử lý ngay khi nhận, giảm thời gian chờ.
+* Khả năng mở rộng: Phù hợp với dữ liệu vô hạn (ví dụ: video streaming) hoặc file kích thước lớn.
+* Dễ kết hợp: Stream hỗ trợ pipeline thông qua pipe(), giúp kết nối các luồng xử lý một cách mượt mà.
+### 2. pipe() làm gì?
+* pipe() chuyển dữ liệu từ một stream đọc (Readable) sang một stream ghi (Writable) hoặc các stream khác (Transform, Duplex).
+Cơ chế: Tự động quản lý luồng dữ liệu, xử lý backpressure (khi stream ghi không theo kịp stream đọc).
+* ví dụ : 
+``` javascript
+const fs = require('fs');
+fs.createReadStream('input.txt').pipe(fs.createWriteStream('output.txt'));
+```
+### 3. Có bao nhiêu loại stream?
+Có 4 loại stream trong Node.js:
+* Readable: Stream để đọc dữ liệu (ví dụ: fs.createReadStream).
+* Writable: Stream để ghi dữ liệu (ví dụ: fs.createWriteStream).
+* Duplex: Stream có thể đọc và ghi (ví dụ: TCP socket).
+* Transform: Một loại Duplex stream, dữ liệu đầu vào được biến đổi trước khi xuất ra (ví dụ: zlib.createGzip).
+#### Bài tập nhỏ: Đọc input.txt → ghi output.txt bằng stream.
+```javascript
+const fs = require('fs');
+
+// Tạo stream đọc và ghi
+const readStream = fs.createReadStream(`${__dirname}/input.txt`, { encoding: 'utf8' });
+const writeStream = fs.createWriteStream(`${__dirname}/output.txt`);
+
+// Pipe dữ liệu từ readStream sang writeStream
+readStream.pipe(writeStream);
+
+// Xử lý sự kiện khi hoàn tất
+writeStream.on('finish', () => {
+    console.log('File copied successfully!');
+});
+
+readStream.on('error', (err) => console.error('Read error:', err));
+writeStream.on('error', (err) => console.error('Write error:', err));
+```
+#### Bài tập nâng cao:
+Viết công cụ thay thế chuỗi trong file lớn:
+Đọc file lớn bằng stream (fs.createReadStream)
+Thay thế "ERROR" thành "⚠️ Warning" và ghi lại vào file mới
+Yêu cầu: xử lý file >100MB mượt mà.
+```javascript
+// readStream.js
+// Tạo Transform stream để thay thế chuỗi
+const fs = require('fs');
+const { Transform } = require('stream');
+
+// Tạo Transform stream để thay thế chuỗi
+const replaceTransform = new Transform({
+    transform(chunk, encoding, callback) {
+        const replaced = chunk.toString().replace(/ERROR/g, '⚠️ Warning');
+        callback(null, replaced);
+    }
+});
+
+// Tạo stream đọc và ghi
+const readStream = fs.createReadStream(`${__dirname}/input1.txt`, { encoding: 'utf8', highWaterMark: 64 * 1024 }); // 64KB chunks
+const writeStream = fs.createWriteStream(`${__dirname}/output1.txt`);
+
+// Pipe: read -> transform -> write
+readStream.pipe(replaceTransform).pipe(writeStream);
+
+// Xử lý sự kiện khi hoàn tất
+writeStream.on('finish', () => {
+    console.log('File processed successfully!');
+});
+
+// Xử lý lỗi
+readStream.on('error', (err) => console.error('Read error:', err));
+replaceTransform.on('error', (err) => console.error('Transform error:', err));
+writeStream.on('error', (err) => console.error('Write error:', err));
+```
+![alt text](./screenshots/14.png)
+![alt text](./screenshots/12.png)
+![alt text](./screenshots/13.png)
+
+# PHẦN 45–46: Env & Error Handling
+### Câu hỏi:
+### 1. Phân biệt development và production.
+* Development: Môi trường phát triển, dùng để viết code, debug, và kiểm tra.
+  * Cấu hình: Chi tiết lỗi được hiển thị (stack trace), logging chi tiết, các công cụ debug được bật.
+  * Mục đích: Dễ dàng phát hiện và sửa lỗi.
+  * Ví dụ: Chạy ứng dụng trên localhost với NODE_ENV=development.
+* Production: Môi trường triển khai thực tế, nơi ứng dụng phục vụ người dùng.
+  * Cấu hình: Lỗi được xử lý gọn gàng (không lộ stack trace), tối ưu hiệu suất, bảo mật cao.
+  * Mục đích: Ổn định, nhanh, và an toàn.
+  * Ví dụ: Chạy trên server với NODE_ENV=production.
+
+### 2. Dùng try/catch với async/await?
+🔍 Vì sao cần try...catch?
+Khi một hàm async dùng await, nếu await gặp lỗi (Promise bị reject), lỗi sẽ được ném ra (throw) giống như lỗi đồng bộ (throw new Error()), và nếu  không dùng try...catch, chương trình sẽ bị crash hoặc lỗi sẽ không được xử lý đúng cách.
+ví dụ : 
+```javascript
+async function getData() {
+  const res = await fetch('https://api.fake-url.com/data');
+  const data = await res.json(); // Nếu fetch lỗi, dòng này không chạy
+  console.log(data);
+}
+
+getData(); // Nếu fetch bị lỗi, lỗi không được bắt
+
+```
+try...catch chỉ bắt được lỗi nếu nó xảy ra trong await hoặc trong đoạn code trong khối try.
+
+Nếu bạn gọi một hàm async mà không await, thì lỗi không bị bắt trong try...catch 
+```javascript
+// divide0.js
+async function getData() {
+  try {
+    fetch('https://api.fake-url.com/data'); // Không await nên lỗi không bị bắt
+  } catch (err) {
+    console.log('Không bắt được lỗi này');
+  }
+}
+```
+#### ✅ Kết luận
+Dùng try...catch với async/await để:
+
+Bắt lỗi rõ ràng, tương tự như khi xử lý lỗi trong code đồng bộ.
+
+Viết code dễ đọc hơn so với .then().catch().
+
+Giúp chương trình không bị crash khi có lỗi bất ngờ.
 
 
-🎯 Bài tập nâng cao:
-Viết HTTP server không dùng Express:
-Route POST /upload nhận file bằng multipart/form-data (gợi ý dùng busboy)
-Khi upload xong, emit sự kiện upload:done, ghi log lại vào file uploads.log.
+
+
+
+### 3. Bắt uncaughtException để làm gì?
+* Việc bắt uncaughtException trong Node.js (hoặc các môi trường JavaScript khác) là để xử lý những lỗi không được bắt (unhandled errors) mà nếu không xử lý, chương trình của bạn sẽ crash (dừng đột ngột).
+* uncaughtException là gì?
+Đây là một sự kiện (event) của đối tượng process trong Node.js. Nó xảy ra khi một lỗi không được bắt bởi try...catch hoặc .catch().
+* Mục đích:
+  * Ngăn ứng dụng crash đột ngột.
+  * Ghi log lỗi để debug.
+  * Thực hiện các tác vụ dọn dẹp (ví dụ: đóng kết nối database).
+```javascript
+process.on('uncaughtException', (err) => {
+  console.error('Lỗi không được bắt:', err);
+});
+
+```
+#### Bài tập nhỏ: Viết đoạn code chia cho 0 và bắt lỗi.
+```javascript
+function divide(a, b) {
+    try {
+        
+        if (b === 0) {
+            throw new Error('Không thể chia cho 0');
+        }
+        console.log(a/b);
+    } catch (error) {
+        console.error('Lỗi:', error.message);
+    }
+}
+
+divide(2,0);
+divide(2,2);
+```
+#### Bài tập nâng cao:
+Tạo middleware xử lý lỗi cho Express:
+Tự bắt lỗi 404, 500
+Log lỗi vào file error.log
+Trả response JSON tùy theo môi trường (dev vs prod)
+```javascript
+const express = require('express');
+const fs = require('fs').promises;
+const path = require('path');
+const app = express();
+
+
+app.use(express.json());
+
+const env = process.env.NODE_ENV || 'development';
+
+const logError = async (err) => {
+    const logMessage = `${new Date().toISOString()} - ${err.stack}\n`;
+    try {
+        await fs.appendFile(path.join(__dirname, 'error.log'), logMessage);
+    } catch (logErr) {
+        console.error('Không thể ghi log:', logErr);
+    }
+};
+const errorHandler = (err, req, res, next) => {
+    logError(err);
+
+    const statusCode = err.statusCode || 500;
+    const response = {
+        error: {
+            message: env === 'development' ? err.message : 'lỗi server'
+        },
+    };
+
+    res.status(statusCode).json(response);
+};
+const notFoundHandler = (req, res, next) => {
+    const err = new Error('Not Found');
+    err.statusCode = 404;
+    next(err);
+};
+
+app.get('/', (req, res) => {
+    res.json({ message: 'test' });
+});
+// middleware 404
+app.get('/error', (req, res, next) => {
+    const err = new Error('lỗi gì đó rồi');
+    err.statusCode = 500;
+    next(err);
+});
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+app.listen(3000, () => {
+    console.log('Server chạy trên cổng 3000');
+});
+```
+#### Test bằng Postman
+error handle
+![alt text](./screenshots/15.png)
+error Not Found
+![alt text](./screenshots/16.png)
+
+# PHẦN 47–49: HTTP nâng cao
+### Câu hỏi:
+### 1. GET vs POST khác nhau ở điểm nào?
+#### GET:
+* Dùng để lấy dữ liệu từ server.
+* Dữ liệu được gửi qua query string (trong URL).
+* Giới hạn độ dài dữ liệu (tùy trình duyệt/server)  (khoảng 2048 ký tự).
+* Có thể lưu cache, bookmark.
+* Không thay đổi trạng thái server (idempotent).
+* Ví dụ: /users?id=123
+#### POST:
+* Dùng để gửi dữ liệu lên server (thường để tạo/cập nhật).
+* Dữ liệu được gửi trong body request (không hiển thị trên URL).
+* Không giới hạn độ dài dữ liệu.
+* Không lưu cache, không bookmark được.
+* Có thể thay đổi trạng thái server.
+* Ví dụ: Gửi JSON { "name": "John" } để tạo user.
+
+### 2. Cách lấy body trong POST request?
+Trong Express, để lấy body từ POST request, cần middleware express.json() để parse JSON hoặc express.urlencoded() cho form data.
+
+### 3. Dùng http.ServerResponse ra sao?
+http.ServerResponse là đối tượng trong Node.js dùng để gửi response từ server về client.
+*Các phương thức chính:
+* res.writeHead(statusCode, headers): Gửi mã trạng thái và header.
+* res.write(data): Gửi dữ liệu (có thể gọi nhiều lần).
+* res.end([data]): Kết thúc response.
+* ví dụ : 
+```javascript
+const http = require('http');
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.write('Hello, World!');
+  res.end();
+});
+server.listen(3000);
+```
+#### Bài tập nhỏ: Tạo server Express có route GET /, POST /data lưu data vào mảng.
+```javascript
+// bai1.js
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let arrData = [];
+
+app.get('/', (req, res) => {
+  res.json({data: arrData });
+});
+
+app.post('/data', (req, res) => {
+  const data = req.body;
+  arrData.push(data);
+  res.status(201).json({data });
+});
+
+app.listen(3000, () => {
+  console.log('Server chạy trên cổng 3000');
+});
+```
+#### Bài tập nâng cao:
+Tạo REST API quản lý tasks:
+CRUD: /tasks
+Mỗi task có deadline, status
+Tự động kiểm tra deadline quá hạn, chuyển status → "overdue"
+Bonus:
+Dùng middleware kiểm tra auth token (giả lập).
+Gọi API test bằng Postman hoặc curl.
+
+```javascript
+//bai2.js
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+
+let tasks = [];
+let idCounter = 1;
+
+
+const authMiddleware = (req, res, next) => {
+  const token = req.headers['authorization'];
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+};
+
+
+const checkOver = (task) => {
+  if (task.status !== 'completed' && new Date(task.deadline) < new Date()) {
+    task.status = 'overdue';
+  }
+  return task;
+};
+
+
+app.use('/tasks', authMiddleware);
+
+
+app.get('/tasks', (req, res) => {
+  const updatedTasks = tasks.map(checkOver);
+  res.json(updatedTasks);
+});
+
+
+app.get('/tasks/:id', (req, res) => {
+  const task = tasks.find(t => t.id === parseInt(req.params.id));
+  if (!task) {
+    return res.status(404).json({ error: 'Task không tồn tại' });
+  }
+  res.json(checkOver(task));
+});
+
+
+app.post('/tasks', (req, res) => {
+  const { title, deadline } = req.body;
+  if (!title || !deadline) {
+    return res.status(400).json({ error: 'Thiếu title hoặc deadline' });
+  }
+  const task = {
+    id: idCounter++,
+    title,
+    deadline,
+    status: 'pending',
+  };
+  tasks.push(task);
+  res.status(201).json(checkOver(task));
+});
+
+
+app.put('/tasks/:id', (req, res) => {
+  const task = tasks.find(t => t.id === parseInt(req.params.id));
+  if (!task) {
+    return res.status(404).json({ error: 'Task không tồn tại' });
+  }
+  const { title, deadline, status } = req.body;
+  if (title) task.title = title;
+  if (deadline) task.deadline = deadline;
+  if (status) task.status = status;
+  res.json(checkOver(task));
+});
+
+
+app.delete('/tasks/:id', (req, res) => {
+  const index = tasks.findIndex(t => t.id === parseInt(req.params.id));
+  if (index === -1) {
+    return res.status(404).json({ error: 'Task không tồn tại' });
+  }
+  tasks.splice(index, 1);
+  res.status(204).send();
+});
+
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Lỗi server' });
+});
+
+app.listen(3000, () => {
+  console.log('Server chạy trên cổng 3000');
+});
+```
+Test api bằng curl command prompt
+![alt text](./screenshots/17.png)
