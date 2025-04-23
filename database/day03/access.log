@@ -1,0 +1,82 @@
+::1
+::ffff:192.168.1.44
+::1
+::1
+::1 - - [23/Apr/2025:08:07:26 +0000] "GET / HTTP/1.1" 200 36 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:08:48:18 +0000] "GET / HTTP/1.1" 200 36 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+::1
+::1 - - [23/Apr/2025:09:05:53 +0000] "GET /products HTTP/1.1" 200 2 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:06:27 +0000] "GET /products HTTP/1.1" 200 2 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:06:53 +0000] "GET /products HTTP/1.1" 200 24021 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:07:21 +0000] "GET /products HTTP/1.1" 200 1346 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:29:28 +0000] "GET /products HTTP/1.1" 200 1346 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:29:52 +0000] "POST /products HTTP/1.1" 201 146 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:31:46 +0000] "POST /products HTTP/1.1" 201 146 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:32:03 +0000] "POST /products HTTP/1.1" 201 146 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:32:34 +0000] "POST /products HTTP/1.1" 201 146 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:33:54 +0000] "POST /products HTTP/1.1" 201 146 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:09:34:05 +0000] "POST /products HTTP/1.1" 201 146 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:04:40 +0000] "PUT /products/11 HTTP/1.1" 200 36 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:04:54 +0000] "PUT /products/11 HTTP/1.1" 200 38 "-" "PostmanRuntime/7.43.3"
+::1
+::1
+::1
+::1
+::1
+::1 - - [23/Apr/2025:10:10:06 +0000] "PUT /products/11 HTTP/1.1" 201 32 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:10:32 +0000] "PUT /products/11 HTTP/1.1" 201 32 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:11:00 +0000] "PUT /products/11 HTTP/1.1" 201 32 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:11:28 +0000] "PUT /products/11 HTTP/1.1" 201 32 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:11:49 +0000] "PUT /products/11 HTTP/1.1" 201 32 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:13:08 +0000] "PUT /products/11 HTTP/1.1" 201 32 "-" "PostmanRuntime/7.43.3"
+::1
+::1
+::1
+::1
+::1
+::1 - - [23/Apr/2025:10:18:58 +0000] "DELETE /products/ HTTP/1.1" 500 32 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:21:07 +0000] "DELETE /products/11 HTTP/1.1" 200 36 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:21:26 +0000] "DELETE /products/11 HTTP/1.1" 200 36 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:21:38 +0000] "DELETE /products/11 HTTP/1.1" 201 30 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:21:55 +0000] "DELETE /products/11 HTTP/1.1" 201 31 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:22:51 +0000] "DELETE /products/11 HTTP/1.1" 201 31 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:23:35 +0000] "DELETE /products/11 HTTP/1.1" 201 31 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:10:24:07 +0000] "DELETE /products/11 HTTP/1.1" 201 31 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:14:42:41 +0000] "GET /products/ HTTP/1.1" 200 38 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:14:42:51 +0000] "GET /products/ HTTP/1.1" 200 1346 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:14:47:26 +0000] "POST /products HTTP/1.1" 201 146 "-" "PostmanRuntime/7.43.3"
+::1
+::1
+::1 - - [23/Apr/2025:14:57:39 +0000] "PUT /products/11 HTTP/1.1" - - "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:14:57:39 +0000] "PUT /products/10 HTTP/1.1" 201 32 "-" "PostmanRuntime/7.43.3"
+::1
+::1 - - [23/Apr/2025:14:58:22 +0000] "DELETE /products/10 HTTP/1.1" 201 31 "-" "PostmanRuntime/7.43.3"
