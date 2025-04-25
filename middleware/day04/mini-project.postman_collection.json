@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "be85a1d2-30c9-46cc-8b35-ea779e922823",
+		"name": "mini-project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41516336"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "get all users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/admin/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mở khóa , khóa user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/admin/users/3/lock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"users",
+								"3",
+								"lock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "thêm product",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"name\": \"Wireless Mouse\",\r\n    \"price\": 29.99, \r\n    \"stock\": 100,\r\n    \"description\": \"Ergonomic wireless mouse\",\r\n    \"category\": \"Electronics\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admin/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sửa thông tin product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsIm5hbWUiOiJhIiwiZW1haWwiOiJhQGEuYSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTUxMDkzMiwiZXhwIjoxNzQ1NTE0NTMyfQ.yAiKk0DPpmOq91oN1zDhossBaDQcdrqYU8Mii6Bx8rM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"name\": \"Wireless Mouse\",\r\n    \"price\": 5555, \r\n    \"stock\": 100,\r\n    \"description\": \"Ergonomic wireless mouse\",\r\n    \"category\": \"Electronics\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/admin/products/49",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"products",
+								"49"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "xóa product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsIm5hbWUiOiJhIiwiZW1haWwiOiJhQGEuYSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTUxMDkzMiwiZXhwIjoxNzQ1NTE0NTMyfQ.yAiKk0DPpmOq91oN1zDhossBaDQcdrqYU8Mii6Bx8rM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/admin/products/45",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"admin",
+								"products",
+								"45"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "xem tất cả đơn hàng",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "cập nhật trạng thái đơn hàng",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "đăng nhập ",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"a@a.a\",\r\n    \"password\" : \"a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "đăng kí",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Giả sử token nằm trong response dạng { token: \"abc123\" }\r",
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"access_token\", response.token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"a@a.a\",\r\n    \"name\" : \"a\",\r\n    \"password\" : \"a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "phân trang sản phẩm",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tìm kiếm sản phẩm",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/search/mouse",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"search",
+								"mouse"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lọc sản phẩm theo loại",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/filter/Electronics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"filter",
+								"Electronics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "thêm sản phẩm vào giỏ",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
