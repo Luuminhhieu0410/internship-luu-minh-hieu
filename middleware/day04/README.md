@@ -297,7 +297,8 @@ export  function validateProduct(req, res, next) {
   
   
 ```
-### File Postman collection test API
- [mini-project.postman_collection.json](./mini-project.postman_collection.json)
+###  Tổng quan Postman collection test API
+![alt text](image.png)
+File [mini-project.postman_collection.json](./mini-project.postman_collection.json)
 
 
