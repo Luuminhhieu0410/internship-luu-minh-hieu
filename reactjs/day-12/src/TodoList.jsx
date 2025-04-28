@@ -6,6 +6,8 @@ export function TodoList({ listWorks, addWork }) {
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
 
+  let a = document.querySelectorAll('.flex');
+  console.log(a);
   // tạo ID duy nhất cho công việc mới
   let nextId = listWorks.length
     ? Math.max(...listWorks.map((item) => item.id)) + 1
