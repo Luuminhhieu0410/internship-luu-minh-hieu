@@ -1,0 +1,31 @@
+<div class="inventory-block">
+  <h3 id="inventory-status"></h3>
+</div>
+
+<script>
+  let productId = {{ product.id | default: 0 }};
+  if (productId > 100) {
+    productId = productId % 100;
+  }
+  if (productId === 0) {
+    productId = 1;
+  }
+
+  fetch(`https://dummyjson.com/products/${productId}`)
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('inventory-status').innerText = `Còn lại: ${data.stock} sản phẩm`;
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+      document.getElementById('inventory-status').innerText = 'Lỗi khi tải dữ liệu tồn kho';
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Inventory Block",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}
