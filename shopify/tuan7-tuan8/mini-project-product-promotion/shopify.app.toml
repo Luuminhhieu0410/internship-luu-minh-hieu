@@ -1,0 +1,36 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "f45f2c275779b1b0df8c4929bfbeab7a"
+name = "Product-Promotion"
+handle = "product-promotion-1"
+application_url = "https://removed-brochure-somewhat-seriously.trycloudflare.com"
+embedded = true
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2025-04"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,read_inventory,write_inventory,read_locations,read_markets_home"
+
+[auth]
+redirect_urls = [
+  "https://removed-brochure-somewhat-seriously.trycloudflare.com/auth/callback",
+  "https://removed-brochure-somewhat-seriously.trycloudflare.com/auth/shopify/callback",
+  "https://removed-brochure-somewhat-seriously.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
