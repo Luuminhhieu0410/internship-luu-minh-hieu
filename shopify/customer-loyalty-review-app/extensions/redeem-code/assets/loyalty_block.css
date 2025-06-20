@@ -1,0 +1,315 @@
+/* assets/loyalty-button.css */
+.loyalty-button-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.loyalty-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, #1976d2, #42a5f5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.loyalty-btn:hover {
+  transform: scale(1.1);
+  background: linear-gradient(45deg, #1565c0, #2196f3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.loyalty-btn-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.loyalty-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.2s ease; /* Giảm thời gian transition */
+}
+
+.loyalty-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.loyalty-modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 70%;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(10px); /* Giảm khoảng cách trượt */
+  transition: transform 0.2s ease; /* Giảm thời gian transition */
+}
+
+.loyalty-modal.show .loyalty-modal-content {
+  transform: translateY(0);
+}
+
+.loyalty-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.loyalty-modal-title {
+  /* font-size: 1.5rem; */
+  font-weight: 600;
+  color: #1a237e;
+  margin: 0;
+}
+
+.loyalty-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.loyalty-close-btn:hover {
+  color: #d32f2f;
+}
+
+.loyalty-close-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.loyalty-modal-body {
+  /* font-size: 1rem; */
+  color: #333;
+}
+
+.loyalty-loading-text {
+  color: #666;
+  text-align: center;
+}
+
+.loyalty-info-title {
+  /* font-size: 1.25rem; */
+  font-weight: 500;
+  color: #1a237e;
+  margin-bottom: 12px;
+}
+
+.loyalty-info-text {
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.loyalty-info-list {
+  list-style: disc;
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.loyalty-info-list li {
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.loyalty-points-text {
+  /* font-size: 1.5rem; */
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 12px;
+}
+
+.loyalty-points-value {
+  color: #1976d2;
+}
+
+.loyalty-redeem-label {
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.loyalty-redeem-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  /* font-size: 1rem; */
+  margin-bottom: 16px;
+  background: #fafafa;
+  transition: border-color 0.2s;
+}
+
+.loyalty-redeem-select:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+
+.loyalty-redeem-btn {
+  width: 100%;
+  padding: 10px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  /* font-size: 1rem; */
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.loyalty-redeem-btn:hover {
+  background: #1b5e20;
+}
+
+.loyalty-login-text {
+  color: #d32f2f;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.loyalty-redeemed-title {
+  /* font-size: 1.25rem; */
+  font-weight: 500;
+  color: #1a237e;
+  margin: 24px 0 12px;
+}
+
+.loyalty-redeemed-list {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  background: #fafafa;
+}
+
+.loyalty-redeemed-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  /* font-size: 0.875rem; */
+  color: #333;
+}
+
+.loyalty-redeemed-empty {
+  color: #666;
+  text-align: center;
+  padding: 8px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .loyalty-modal-content {
+    width: 95%;
+    padding: 16px;
+  }
+
+  .loyalty-modal-title {
+    /* font-size: 1.25rem; */
+  }
+
+  .loyalty-points-text {
+    /* font-size: 1.25rem; */
+  }
+}
+
+/* style cho table danh sách redeemcode */
+/* Table wrapper scroll */
+.loyalty-table-wrapper {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* Table format */
+.loyalty-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.loyalty-table th,
+.loyalty-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.loyalty-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Copy button */
+.copy-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+}
+
+.copy-btn:hover {
+  background-color: #45a049;
+}
+
+/* Trạng thái sử dụng */
+.used {
+  background-color: #f8d7da;
+  color: #721c24;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.not-used {
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+/* Trạng thái hết hạn */
+.expired {
+  background-color: #fde2e2;
+  color: #c00;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.active {
+  background-color: #e0f0ff;
+  color: #004085;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+#gif{
+  width: 500px;
+  height: 500px;
+}

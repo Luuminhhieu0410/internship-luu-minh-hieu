@@ -1,9 +1,9 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "24a11b9ce5d2e9d267cc8d2943596106"
-name = "remix-polaris"
-handle = "remix-polaris-1"
-application_url = "https://convergence-owner-races-gtk.trycloudflare.com"
+client_id = "38dc56c47bcb390570d9b44bfbb52417"
+name = "Customer-Loyalty-Review-App\r"
+handle = "customer-loyalty-review-app"
+application_url = "https://mills-su-finishing-load.trycloudflare.com"
 embedded = true
 
 [build]
@@ -23,13 +23,13 @@ api_version = "2025-04"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "read_customers,write_customers,read_orders,write_orders,write_products,write_fulfillments,write_discounts"
 
 [auth]
 redirect_urls = [
-  "https://convergence-owner-races-gtk.trycloudflare.com/auth/callback",
-  "https://convergence-owner-races-gtk.trycloudflare.com/auth/shopify/callback",
-  "https://convergence-owner-races-gtk.trycloudflare.com/api/auth/callback"
+  "https://mills-su-finishing-load.trycloudflare.com/auth/callback",
+  "https://mills-su-finishing-load.trycloudflare.com/auth/shopify/callback",
+  "https://mills-su-finishing-load.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

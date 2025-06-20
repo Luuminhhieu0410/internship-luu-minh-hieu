@@ -1,0 +1,107 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:123abc@localhost:3306/database1"
+}
+
+
+model Session {
+  id            String   @id @default(uuid())
+  shop          String
+  state         String
+  isOnline      Boolean  @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean  @default(false)
+  locale        String?
+  collaborator  Boolean? @default(false)
+  emailVerified Boolean? @default(false)
+
+}
+
+
+model Customer {
+  id            Int         @id @default(autoincrement())
+  customerId    String      @unique
+  email         String
+  name          String?
+  numberOfOrders Int
+  amountSpent   Float
+  points        Point[]
+  pointLogs     PointLog[]
+  redeemCodes   RedeemCode[]
+  reviews       Review[]
+}
+
+model Point {
+  id            Int         @id @default(autoincrement())
+  customerId    String      
+  totalPoints   Int
+  customer      Customer    @relation(fields: [customerId], references: [customerId])
+}
+
+model PointLog {
+  id            Int         @id @default(autoincrement())
+  customerId    String
+  type          String      @default("earn") // earn, spend
+  points        Int
+  reason        String
+  createdAt     DateTime    @default(now())
+  customer      Customer    @relation(fields: [customerId], references: [customerId])
+}
+
+model RedeemCode {
+  id            Int         @id @default(autoincrement())
+  code          String      @unique
+  amount        Float
+  customerId    String
+  pointsUsed    Int
+  createdAt     DateTime    @default(now())
+  expiresAt     DateTime
+  isUsed        Boolean     @default(false)
+  customer      Customer    @relation(fields: [customerId], references: [customerId])
+}
+
+model Review {
+  id            Int            @id @default(autoincrement())
+  productId     String
+  customerId    String?
+  rating        Int
+  content       String
+  approved      Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+  customer      Customer?      @relation(fields: [customerId], references: [customerId])
+  images        ReviewImage[]  
+}
+model ReviewImage {
+  id        Int      @id @default(autoincrement())
+  url       String
+  reviewId  Int
+  review    Review   @relation(fields: [reviewId], references: [id])
+}
+
+model PointSetting {
+  id             Int      @id @default(autoincrement())
+  earnRate       Float    @default(0) // Tỷ lệ tích điểm: VD 10000 VNĐ = 1 điểm -> earnRate = 0.0001
+  spendRate      Float    @default(0) // Tỷ lệ quy đổi điểm ra tiền: VD 1 điểm = 1000 VNĐ -> spendRate = 1000
+  reviewReward   Int?     // Số điểm được tặng nếu viết review được duyệt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+}
+
+
+
+model proc {
+    id             Int      @id @default(autoincrement())
+
+}
+

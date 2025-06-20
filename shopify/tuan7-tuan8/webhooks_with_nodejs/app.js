@@ -52,9 +52,22 @@ app.post('/webhooks/product/delete',(req,res) =>{
             return res.send(err);
         }
     })
-
-
+})
+app.post('/webhooks/order/create',(req,res) =>{
+    const time = new Date().toLocaleString();
+  
+    console.log('webhooks order create đã được kích hoạt');
+    console.log(JSON.stringify(req.body));
+    console.log("header :  " + JSON.stringify(req.headers));
     
+    // const {id} = req.body;
+    // if(!id) return res.send('không có data');
+    // fs.appendFile('product_delete.txt',`id : ${id} | time : ${time} \n`,(err) => {
+    //     if(err){
+    //         console.log(err);
+    //         return res.send(err);
+    //     }
+    // })
 })
 app.listen(port,() => {
     console.log(`server is running at http://localhost:${port} `)
