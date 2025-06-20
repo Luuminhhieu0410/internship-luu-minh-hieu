@@ -1,6 +1,6 @@
 const shop = 'shop-sieu-vip.myshopify.com';
 
-const token = process.env.CLOUDINARY_CLOUD_NAME;
+const token = process.env.ACCESS_TOKEN_SHOPIFY;
 
 export async function createDiscountCodeWithFullDebug({ customerId, amount, code, expiresAt }) {
   const query = `
